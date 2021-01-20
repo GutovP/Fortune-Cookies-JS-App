@@ -1,0 +1,25 @@
+{
+  "name": "fortune-cookies",
+  "version": "1.0.0",
+  "description": "js-app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Petar Gutov",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jquery": "^3.5.1",
+    "lodash": "^4.17.20",
+    "lowdb": "^1.0.0",
+    "systemjs": "^6.8.3",
+    "systemjs-plugin-babel": "0.0.25",
+    "underscore-db": "^0.12.2"
+  },
+  "devDependencies": {
+    "@types/lowdb": "^1.0.9",
+    "@types/systemjs": "^6.1.0"
+  }
+}
