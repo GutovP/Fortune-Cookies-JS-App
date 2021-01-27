@@ -1,6 +1,7 @@
 import 'jquery';
 
 import { MyRouter } from 'myRouter';
+import { homeController } from './controllers/home';
 
 const router = new MyRouter();
 

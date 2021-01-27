@@ -1,17 +1,21 @@
-var express = require('express'),
-  bodyParser = require('body-parser'),
-  lowdb = require('lowdb');
+import express from 'express';
+import bodyParser from 'body-parser';
+import lowdb from 'lowdb';
+import FileSync from 'lowdb/adapters/FileSync.js';
+import * as underscore from 'underscore-db';
 
-var db = lowdb('./data/data.json');
-db._.mixin(require('underscore-db'));
+const adapter = new FileSync('./data/data.json');
+const db = lowdb(adapter);
+
+db._.mixin(underscore);
 
 var app = express();
 app.use(bodyParser.json());
 
-app.use(express.static('public'));
-app.use('/libs', express.static('node_modules'));
+app.use(express('public'));
+app.use('/node_modules', express('node_modules'));
 
-require('./utils/authorize-user')(app, db);
+import './utils/authorize-user.js';
 
 //User routes
 var usersController = require('./controllers/users-controller')(db);
