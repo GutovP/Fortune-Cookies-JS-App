@@ -1,4 +1,4 @@
-import { requester } from 'requester';
+import * as requester from 'requester';
 
 export function getUsers() {
   return requester.get('api/users');

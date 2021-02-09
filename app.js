@@ -1,21 +1,17 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import lowdb from 'lowdb';
-import FileSync from 'lowdb/adapters/FileSync.js';
-import * as underscore from 'underscore-db';
+var express = require('express'),
+  bodyParser = require('body-parser'),
+  lowdb = require('lowdb');
 
-const adapter = new FileSync('./data/data.json');
-const db = lowdb(adapter);
-
-db._.mixin(underscore);
+var db = lowdb('./data/data.json');
+db._.mixin(require('underscore-db'));
 
 var app = express();
 app.use(bodyParser.json());
 
-app.use(express('public'));
-app.use('/node_modules', express('node_modules'));
+app.use(express.static('public'));
+app.use('/libs', express.static('node_modules'));
 
-import './utils/authorize-user.js';
+require('./utils/authorize-user')(app, db);
 
 //User routes
 var usersController = require('./controllers/users-controller')(db);
@@ -28,7 +24,7 @@ var cookiesController = require('./controllers/cookies-controller')(db);
 app.get('/api/cookies', cookiesController.get);
 app.post('/api/cookies', cookiesController.post);
 app.put('/api/cookies/:id', cookiesController.put);
-
+//
 // My fortune cookies
 var myCookiesController = require('./controllers/my-cookies-controller')(db);
 app.get('/api/my-cookie', myCookiesController.get);
@@ -37,7 +33,8 @@ app.get('/api/my-cookie', myCookiesController.get);
 var categoriesController = require('./controllers/categories-controller')(db);
 app.get('/api/categories', categoriesController.get);
 
+
 var port = 3000;
-app.listen(port, function () {
+app.listen(port, function() {
   console.log('Server is running at http://localhost:' + port);
 });
